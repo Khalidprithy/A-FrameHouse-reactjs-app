@@ -1,0 +1,25 @@
+.navbar{
+    height: 60px;
+    background-color: rgb(114, 114, 114);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.appname{
+    display: flex;
+    align-items: center;
+}
+
+.navlink{
+    text-decoration: none;
+    padding: 5px;
+    color: aliceblue;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.navlink:hover{
+    color: orange;
+}
