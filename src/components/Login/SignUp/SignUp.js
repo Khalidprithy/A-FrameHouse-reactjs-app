@@ -26,6 +26,15 @@ const SignUp = () => {
         setConfirmPassword(e.target.value)
     }
 
+    const handleCreateUser = e => {
+        e.preventDefault();
+        if (password !== confirmPassword) {
+            setError('Password did not matched');
+            return;
+        }
+        setError('')
+    }
+
 
     return (
         <div className="form-container">
@@ -37,7 +46,7 @@ const SignUp = () => {
             </div>
             <hr />
             <h5 className="text-center">Sign Up</h5>
-            <Form className="form-submit">
+            <Form onSubmit={handleCreateUser} className="form-submit">
                 <Form.Group className="mb-3" controlId="formBasicText">
                     <Form.Label>Name</Form.Label>
                     <Form.Control onBlur={handleNameBlur} type="text" placeholder="Enter your name" required />
@@ -58,6 +67,7 @@ const SignUp = () => {
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control onBlur={handleConfirmPasswordBlur} type="password" placeholder="Password" required />
                 </Form.Group>
+                <p className="text-danger">{error}</p>
                 <Form.Group className="mb-3 d-flex justify-content-between" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Already Registered?" />
                 </Form.Group>
