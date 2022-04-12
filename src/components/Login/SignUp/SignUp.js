@@ -4,6 +4,9 @@ import './SignUp.css'
 import { Form } from "react-bootstrap";
 import { BsFacebook, BsGithub } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
     const [name, setName] = useState('');
@@ -11,6 +14,9 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth)
 
     const handleNameBlur = e => {
         setName(e.target.value);
@@ -26,13 +32,23 @@ const SignUp = () => {
         setConfirmPassword(e.target.value)
     }
 
+    if (user) {
+        navigate('/home')
+    }
+
     const handleCreateUser = e => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setError('Password did not matched');
             return;
         }
+        if (password.length < 8 && password.length > 12) {
+            setError('Password must be 8-12 characters');
+            return;
+        }
         setError('')
+        createUserWithEmailAndPassword(email, password);
+
     }
 
 
