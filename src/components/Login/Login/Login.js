@@ -31,9 +31,8 @@ const Login = () => {
                 <Button className="w-100" variant="success" type="submit">
                     Login
                 </Button>
-                <div className="d-block">
-                    <h6 className="text-center"><hr />or <hr /></h6>
-                </div>
+                <p className="text-center mt-2">Sign in with</p>
+                <hr />
                 <div className="d-flex justify-content-center m-3">
                     <BsFacebook className="mx-2 text-primary"></BsFacebook>
                     <FcGoogle className="mx-2"></FcGoogle>
