@@ -6,9 +6,11 @@ import { BsFacebook, BsGithub } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const SignUp = () => {
+    const [newUser, setNewUser] = useState({});
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,6 +33,54 @@ const SignUp = () => {
     const handleConfirmPasswordBlur = e => {
         setConfirmPassword(e.target.value)
     }
+
+    // Facebook auth
+
+    const facebookProvider = new FacebookAuthProvider();
+
+    const handleFacebookSignIn = () => {
+        signInWithPopup(auth, facebookProvider)
+            .then(result => {
+                const user = result.user;
+                setNewUser(user);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+
+    // Google auth
+
+    const googleProvider = new GoogleAuthProvider();
+
+    const handleGoogleSignIn = () => {
+        signInWithPopup(auth, googleProvider)
+            .then(result => {
+                const user = result.user;
+                setNewUser(user);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+    // Github auth
+
+    const githubProvider = new GithubAuthProvider();
+
+    const handleGithubSignIn = () => {
+        signInWithPopup(auth, githubProvider)
+            .then(result => {
+                const user = result.user;
+                setNewUser(user);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+
 
     if (user) {
         navigate('/home')
@@ -56,9 +106,9 @@ const SignUp = () => {
         <div className="form-container">
             <p className="text-center mt-2">Sign in with</p>
             <div className="d-flex justify-content-center m-3">
-                <BsFacebook className="mx-2 text-primary"></BsFacebook>
-                <FcGoogle className="mx-2"></FcGoogle>
-                <BsGithub className="mx-2"></BsGithub>
+                <BsFacebook onClick={handleFacebookSignIn} className="mx-2 text-primary social-icons"></BsFacebook>
+                <FcGoogle onClick={handleGoogleSignIn} className="mx-2 social-icons"></FcGoogle>
+                <BsGithub onClick={handleGithubSignIn} className="mx-2 social-icons"></BsGithub>
             </div>
             <hr />
             <h5 className="text-center">Sign Up</h5>
@@ -85,7 +135,7 @@ const SignUp = () => {
                 </Form.Group>
                 <p className="text-danger">{error}</p>
                 <Form.Group className="mb-3 d-flex justify-content-between" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Already Registered?" />
+                    <Link className="text-decoration-none ms-2 text-primary" to='/login'>Already registered?</Link>
                 </Form.Group>
                 <Button className="w-100" variant="success" type="submit">
                     Sign Up
